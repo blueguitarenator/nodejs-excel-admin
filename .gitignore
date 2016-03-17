@@ -8,11 +8,13 @@
 *.gz
 *.iml
 *.idea
+*.vs
 
 pids
 logs
 results
 build
 bin
+obj
 
 node_modules

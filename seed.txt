@@ -1,0 +1,48 @@
+﻿CREATE TABLE Athletes (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(100),
+	fullname VARCHAR(50),
+	age INT,
+	dob DATE,
+	gender VARCHAR(10),
+	phone VARCHAR(12));
+
+CREATE TABLE Sessions (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	datetime DATE,
+	hour INT);
+
+CREATE TABLE AthleteSession(
+	athleteId INT NOT NULL,
+	sessionId INT NOT NULL,
+	PRIMARY KEY (athleteId, sessionId),
+	FOREIGN KEY (athleteId) REFERENCES Athletes (id),
+	FOREIGN KEY (sessionId) REFERENCES Sessions (id));
+
+INSERT INTO Athletes VALUES
+	('bob@msn.com','Bob Smith',27,'1955-02-04','male','314-994-2323'),
+	('rich@msn.com','Rich Johnson',50,'1964-08-04','male','314-882-9235')
+
+INSERT INTO Sessions (datetime, hour) VALUES
+	('2016-03-20', 6),
+	('2016-03-20', 7);
+
+INSERT INTO AthleteSession (athleteId, sessionId) VALUES
+	(1, 1),
+	(2, 2);
+
+
+SELECT datetime, hour FROM Sessions s join AthleteSession ss ON s.id=ss.sessionId JOIN Athletes a ON ss.athleteId=a.id WHERE a.id=2;
+
+SELECT * FROM Sessions
+WHERE datetime BETWEEN '2012-12-25 00:00:00' AND '2012-12-25 23:59:59';
+
+select * from Sessions where datetime between '2016-03-15' and '2016-03-15' and hour=6;
+
+select hour, datetime, fullname from Sessions s
+    join AthleteSession ss on s.id=ss.sessionId
+    join Athletes a on a.id=ss.athleteId
+    where datetime between '2016-03-15' and '2016-03-15';
+
+
+SELECT hour, fullname FROM Sessions s join AthleteSession ss ON s.id=ss.sessionId JOIN Athletes a ON ss.athleteId=a.id WHERE s.datetime = '2016-03-17' ORDER BY hour;

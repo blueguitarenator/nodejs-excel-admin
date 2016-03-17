@@ -31,24 +31,43 @@ block content
                 thead
                     th Full Name
                     th Email
-                    th Delete?
+                    th Delete/Update?
                 tbody
         // /USER LIST
 
         // ADD USER
-        h2 Add User
-        #addUser
-            fieldset
-                input#inputUserFullname(type='text', placeholder='Full Name')
-                input#inputUserEmail(type='text', placeholder='Email')
-                br
-                input#inputUserDob(type='text', placeholder='dob')
-                input#inputUserAge(type='text', placeholder='Age')
-                br
-                input#inputUserPhone(type='text', placeholder='Phone')
-                input#inputUserGender(type='text', placeholder='gender')
-                br
-                button#btnAddUser Add User
+        #addUserPanel
+            h2 Add User
+            #addUser
+                fieldset
+                    input#inputUserFullname(type='text', placeholder='Full Name')
+                    input#inputUserEmail(type='text', placeholder='Email')
+                    br
+                    input#inputUserDob(type='text', placeholder='dob')
+                    input#inputUserAge(type='text', placeholder='Age')
+                    br
+                    input#inputUserPhone(type='text', placeholder='Phone')
+                    input#inputUserGender(type='text', placeholder='gender')
+                    br
+                    button#btnAddUser Add User
         // /ADD USER
+
+        // UPDATE USER
+        #updateUserPanel
+            h2 Update User
+            #updateUser
+                fieldset
+                    input#updateUserFullname(type='text', placeholder='Full Name')
+                    input#updateUserEmail(type='text', placeholder='Email')
+                    br
+                    input#updateUserDob(type='text', placeholder='dob')
+                    input#updateUserAge(type='text', placeholder='Age')
+                    br
+                    input#updateUserPhone(type='text', placeholder='Phone')
+                    input#updateUserGender(type='text', placeholder='gender')
+                    br
+                    button#btnUpdateUser Update User
+                    button#btnCancelUpdateUser Cancel
+        // /UPDATE USER
 
     // /WRAPPER

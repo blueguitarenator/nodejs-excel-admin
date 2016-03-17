@@ -46,6 +46,15 @@ router.delete('/deleteuser/:id', function (req, res) {
     console.log(query.sql);
 });
 
-//router.put('/updateuser/:id', user.updateuser(db));
+router.put('/updateuser/:id', function (req, res) {
+    var db = req.db;
+    var userToUpdate = req.params.id;
+    var data = req.body;
+    db.queryCommandEnabled('UPDATE Athlete SET fullname, dob WHERE id = ?', userToUpdate, function(err) {
+        res.send(
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
 
 module.exports = router;
