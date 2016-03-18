@@ -1,11 +1,14 @@
 ﻿var express = require('express');
 var router = express.Router();
 
-/*
- * GET athletes.
- */
-router.get('/athletes', function (req, res) {
-    console.log('getting athletes');
+router.get('/athletes', getAthletes);
+router.post('/adduser', addUser);
+router.delete('/deleteuser/:id', deleteUser);
+router.put('/updateuser/:id', updateUser);
+
+module.exports = router;
+
+function getAthletes (req, res) {
     var db = req.db;
     var strQuery = 'SELECT * FROM Athletes';
     db.query(strQuery, function (err, rows) {
@@ -16,45 +19,39 @@ router.get('/athletes', function (req, res) {
             res.json(rows);
         }
     });
-});
+}
 
-/*
- * POST to adduser.
- */
-router.post('/adduser', function (req, res) {
+function addUser (req, res) {
     var db = req.db;
-    var query = db.query('INSERT INTO Athletes SET ?', req.body, function (err, result) {
+    db.query('INSERT INTO Athletes SET ?', req.body, function (err, result) {
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
     });
-    console.log(query.sql);
-});
+}
 
-/*
- * DELETE to deleteuser.
- */
-router.delete('/deleteuser/:id', function (req, res) {
+function deleteUser (req, res) {
     var db = req.db;
     var userToDelete = req.params.id;
     console.log(userToDelete);
-    var query = db.query('DELETE FROM Athletes WHERE id = ?', userToDelete, function (err) {
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
+    db.query('DELETE FROM AthleteSession WHERE athleteId = ?', userToDelete, function (err) {
+        if (err) throw err;
+        db.query('DELETE FROM Athletes WHERE id = ?', userToDelete, function (err1) {
+            res.send(
+                (err1 === null) ? { msg: '' } : { msg: err1 }
+            );
+        });
     });
-    console.log(query.sql);
-});
+}
 
-router.put('/updateuser/:id', function (req, res) {
+function updateUser(req, res, next) {
     var db = req.db;
     var userToUpdate = req.params.id;
     var data = req.body;
-    db.queryCommandEnabled('UPDATE Athlete SET fullname, dob WHERE id = ?', userToUpdate, function(err) {
+    
+    db.query('UPDATE Athletes SET ? WHERE id = ?', [data, userToUpdate], function (err) {
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
     });
-});
-
-module.exports = router;
+}

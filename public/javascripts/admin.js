@@ -239,8 +239,9 @@ function updateUser(event) {
         // do the AJAX
         $.ajax({
             type: 'PUT',
-            url: '/updateuser/' + id,
-            data: updatedFields
+            url: '/users/updateuser/' + id,
+            data: updatedFields,
+            dataType: 'json'
         }).done(function(response) {
 
             // Check for a successful (blank) response
